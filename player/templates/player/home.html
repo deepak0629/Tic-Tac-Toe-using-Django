@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+<!--{% load staticfiles %}-->
+<!--the above line is not necesary-->
+
+
+{% block content%}
+    <h2 class="text-primary">Welcome {{user.username}}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Actie games</h3>
+            <ul class="list-group">
+                {% for g in totalgames %}
+                <div class="list-group-item">
+                    <a href="{{g.get_absolute_url}}">
+                    Game {{g.id}} : {{g.first_player}} vs {{g.second_player}}
+                </a>
+                </div>
+
+                {% endfor %}
+
+            </ul>
+            <p>Click below to invite someone to play with you</p>
+            <p>
+                <a href="{% url 'player_new_invitation' %}" class="bt btn-primary">Start a game</a>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3>Invitations</h3>
+        {% if invitations %}
+            <div>
+                {% for inv in invitations %}
+                    <a class="list-group-item" href="{% url 'player_accept_invitation' id=inv.id %}">
+                        {{inv.from_user.username}} ha invited you to play a game.
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You have no invitations.</p>
+        {% endif %}
+    </div>
+    <!--here is data: {{temp.temp1}}<br>-->
+    <!--{% for g in temp %}-->
+    <!--{{g}}<br><br>-->
+        <!--temp game: {{temp.g}}<br>-->
+        <!--{% endfor %}-->
+
+
+{% endblock %}
